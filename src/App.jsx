@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import { useEffect } from 'react'
 import Header from './components/Header'
 import './App.css'
+import Profile from './pages/Profile'
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/country/:code" element={<CountryDetail />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} /> {/* Add this line */}
       </Routes>
     </div>
   )
