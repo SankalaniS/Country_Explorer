@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useUser } from '../contexts/UserContext';
 import React from 'react';
 
-
 function Login() {
   const navigate = useNavigate();
   const { login } = useUser();
@@ -18,8 +17,7 @@ function Login() {
       const user = allUsers[username];
 
       if (user && user.password === password) {
-        console.log('Login function called'); // Debugging log
-        login(username); // Pass the username to the login function
+        login(username);
         navigate('/');
       } else {
         setError('Invalid username or password');
@@ -36,11 +34,11 @@ function Login() {
       if (allUsers[username]) {
         setError('Username already exists');
       } else {
-        allUsers[username] = { password, favorites: [] }; // Store password and initialize favorites
+        allUsers[username] = { password, favorites: [] };
         localStorage.setItem('users', JSON.stringify(allUsers));
-       
-        login(username); // Pass the username to the login function
-        navigate('/'); // Redirect to the home page
+
+        login(username);
+        navigate('/');
       }
     } else {
       setError('Both fields are required');
@@ -48,43 +46,43 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-sm">
-        <h2 className="text-xl font-semibold mb-4">
-          {isRegister ? 'Register' : 'Login'}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-blue-300">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
+          {isRegister ? 'Create an Account' : 'Welcome Back'}
         </h2>
         <input
           type="text"
           placeholder="Enter username"
-          className="w-full p-2 mb-3 border rounded"
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="password"
           placeholder="Enter password"
-          className="w-full p-2 mb-3 border rounded"
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         {isRegister ? (
           <button
-            className="bg-green-500 text-white px-4 py-2 rounded w-full"
+            className="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition"
             onClick={handleRegister}
           >
             Register
           </button>
         ) : (
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded w-full"
+            className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition"
             onClick={handleLogin}
           >
             Login
           </button>
         )}
         <p
-          className="text-blue-500 text-sm mt-4 cursor-pointer"
+          className="text-blue-500 text-sm mt-4 text-center cursor-pointer hover:underline"
           onClick={() => {
             setIsRegister(!isRegister);
             setError('');

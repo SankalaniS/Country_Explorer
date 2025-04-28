@@ -3,16 +3,12 @@ import { useEffect, useState } from 'react';
 import { getCountryByCode } from '../services/api';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { motion } from 'framer-motion';
-import Clock from 'react-clock';
-import 'react-clock/dist/Clock.css';
 import 'leaflet/dist/leaflet.css';
 
 function CountryDetail() {
   const { code } = useParams();
   const [country, setCountry] = useState(null);
   const [user, setUser] = useState(null);
-  const [localTime, setLocalTime] = useState(new Date());
-  const [countryTime, setCountryTime] = useState(new Date());
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,28 +29,6 @@ function CountryDetail() {
       setUser(allUsers[username]);
     }
   }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      setLocalTime(now);
-
-      if (country?.timezones?.[0]) {
-        const formatter = new Intl.DateTimeFormat('en-US', {
-          timeZone: country.timezones[0],
-          hour: 'numeric',
-          minute: 'numeric',
-          second: 'numeric',
-        });
-        const parts = formatter.formatToParts(now);
-        const hours = parts.find((part) => part.type === 'hour')?.value;
-        const minutes = parts.find((part) => part.type === 'minute')?.value;
-        const seconds = parts.find((part) => part.type === 'second')?.value;
-        setCountryTime(new Date(now.setHours(hours, minutes, seconds)));
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [country]);
 
   const handleFavoriteToggle = () => {
     const username = localStorage.getItem('user');
@@ -77,12 +51,12 @@ function CountryDetail() {
   if (!country) {
     return (
       <motion.p
-        className="text-center mt-6"
+        className="text-center mt-6 text-lg text-gray-600"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        Loading...
+        Loading country details...
       </motion.p>
     );
   }
@@ -96,7 +70,7 @@ function CountryDetail() {
     >
       <Link
         to="/"
-        className="inline-block mb-4 bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900 transition-transform transform hover:scale-105"
+        className="inline-block mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-transform transform hover:scale-105"
       >
         ← Back
       </Link>
@@ -120,31 +94,57 @@ function CountryDetail() {
             className="w-full rounded-lg shadow-md mb-4"
           />
           <div>
-            <h1 className="text-4xl font-bold mb-4">{country.name.common}</h1>
-            <p className="text-lg"><strong>Official Name:</strong> {country.name.official}</p>
-            <p className="text-lg"><strong>Capital:</strong> {country.capital?.[0]}</p>
-            <p className="text-lg"><strong>Region:</strong> {country.region}</p>
-            <p className="text-lg"><strong>Subregion:</strong> {country.subregion}</p>
-            <p className="text-lg"><strong>Population:</strong> {country.population.toLocaleString()}</p>
-            <p className="text-lg"><strong>Languages:</strong> {Object.values(country.languages || {}).join(', ')}</p>
-            <p className="text-lg"><strong>Timezones:</strong> {country.timezones.join(', ')}</p>
-            <p className="text-lg"><strong>Area:</strong> {country.area.toLocaleString()} km²</p>
-            <p className="text-lg"><strong>Currency:</strong> {Object.values(country.currencies || {}).map(c => c.name).join(', ')}</p>
+            <h1 className="text-4xl font-bold text-blue-600 mb-4">
+              {country.name.common}
+            </h1>
+            <p className="text-lg text-gray-700">
+              <strong>Official Name:</strong> {country.name.official}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Capital:</strong> {country.capital?.[0]}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Region:</strong> {country.region}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Subregion:</strong> {country.subregion}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Population:</strong> {country.population.toLocaleString()}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Languages:</strong>{' '}
+              {Object.values(country.languages || {}).join(', ')}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Timezones:</strong> {country.timezones.join(', ')}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Area:</strong> {country.area.toLocaleString()} km²
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Currency:</strong>{' '}
+              {Object.values(country.currencies || {})
+                .map((c) => c.name)
+                .join(', ')}
+            </p>
           </div>
         </motion.div>
 
-        {/* Right Section: Map and Clocks */}
+        {/* Right Section: Map */}
         <motion.div
           className="flex-1"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          <h2 className="text-2xl font-semibold mb-4">Location on Map</h2>
+          <h2 className="text-2xl font-semibold text-blue-600 mb-4">
+            Location on Map
+          </h2>
           <MapContainer
             center={country.latlng}
             zoom={4}
-            style={{ height: '400px', width: '100%' }}
+            style={{ height: '500px', width: '100%' }} // Increased height to 500px
             className="rounded-lg shadow-md mb-6"
           >
             <TileLayer
@@ -152,22 +152,9 @@ function CountryDetail() {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
             <Marker position={country.latlng}>
-              <Popup>
-                {country.name.common}
-              </Popup>
+              <Popup>{country.name.common}</Popup>
             </Marker>
           </MapContainer>
-          <h2 className="text-2xl font-semibold mb-4">Current Times</h2>
-          <div className="flex justify-around items-center">
-            <div className="text-center">
-              <h3 className="text-lg font-medium">Local Time</h3>
-              <Clock value={localTime} />
-            </div>
-            <div className="text-center">
-              <h3 className="text-lg font-medium">{country.name.common} Time</h3>
-              <Clock value={countryTime} />
-            </div>
-          </div>
         </motion.div>
       </motion.div>
     </motion.div>
