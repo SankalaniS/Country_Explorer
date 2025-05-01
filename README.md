@@ -8,7 +8,7 @@ The Country Explorer is a React-based web application that allows users to explo
 
 The application is live and accessible at:
 
-👉 [Country Details Frontend](https://country-details-frontend.vercel.app/)
+👉 [Country Details Frontend](https://country-explorer.vercel.app/)
 
 ---
 
