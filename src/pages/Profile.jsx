@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
 import { FaHeart, FaSignOutAlt, FaCamera, FaTrash, FaUserCircle } from 'react-icons/fa';
 import Header from '../components/Header'; // Import the Header component
 
@@ -10,14 +9,6 @@ function Profile() {
   const navigate = useNavigate();
   const [favorites, setFavorites] = useState([]);
   const [profileImage, setProfileImage] = useState(null); // Default to null
-=======
-import { FaHeart, FaSignOutAlt } from 'react-icons/fa';
-
-function Profile() {
-  const { user, logout } = useUser();
-  const navigate = useNavigate();
-  const [favorites, setFavorites] = useState([]);
->>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 
   useEffect(() => {
     if (!user) {
@@ -29,10 +20,7 @@ function Profile() {
     const currentUser = allUsers[user.username];
     if (currentUser) {
       setFavorites(currentUser.favorites || []);
-<<<<<<< HEAD
       setProfileImage(currentUser.profileImage || null); // Use null if no image
-=======
->>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
     }
   }, [user, navigate]);
 
@@ -41,7 +29,6 @@ function Profile() {
     navigate('/login');
   };
 
-<<<<<<< HEAD
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -81,20 +68,10 @@ function Profile() {
         <button
           onClick={() => navigate(-1)} // Navigate to the previous page
           className="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-=======
-  return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 p-6">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        {/* Backward Navigation */}
-        <button
-          onClick={() => navigate(-1)} // Navigate to the previous page
-          className="mb-4 bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900 transition"
->>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
         >
           ← Back
         </button>
 
-<<<<<<< HEAD
         <h1 className="text-3xl font-bold text-center text-gray-700 mb-6">
           Welcome, {user?.username}!
         </h1>
@@ -142,17 +119,6 @@ function Profile() {
           </p>
           <button
             className="flex items-center gap-2 bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600 transition mt-4"
-=======
-        <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
-          Welcome, {user?.username}!
-        </h1>
-        <div className="flex flex-col items-center">
-          <p className="text-lg text-gray-700 mb-4">
-            <strong>Favorites:</strong> {favorites.length} countries
-          </p>
-          <button
-            className="flex items-center gap-2 bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600 transition"
->>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
             onClick={handleLogout}
           >
             <FaSignOutAlt />
@@ -168,11 +134,7 @@ function Profile() {
             favorites.map((countryCode) => (
               <div
                 key={countryCode}
-<<<<<<< HEAD
                 className="bg-blue-200 border border-blue-300 rounded-lg p-4 shadow-md flex items-center justify-between"
-=======
-                className="bg-blue-50 border border-blue-200 rounded-lg p-4 shadow-md flex items-center justify-between"
->>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
               >
                 <span className="text-lg font-medium text-gray-800">
                   {countryCode}
