@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 **🌍 Country Explorer**
+=======
+🌍 Country Explorer
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 
 The Country Explorer is a React-based web application that allows users to explore detailed information about countries worldwide. Users can search, filter, and save their favorite countries for quick access.
 
@@ -15,7 +19,11 @@ The application is live and accessible at:
 ✨ Features
 
 🔒 User Authentication
+<<<<<<< HEAD
 - Register new accounts and log in with existing credentials.
+=======
+- Register new accounts and login with existing credentials.
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 - User sessions are managed using `localStorage`.
 
 🌎 Country Exploration
@@ -31,7 +39,10 @@ The application is live and accessible at:
 ⭐ User Preferences
 - Save countries to a personalized favorites list.
 - Toggle between viewing all countries and only favorites.
+<<<<<<< HEAD
 - Upload and manage profile images.
+=======
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 
 ---
 
@@ -57,23 +68,39 @@ Data Storage
 
 ⚙️ Setup & Installation
 
+<<<<<<< HEAD
 1️ Clone the Repository
+=======
+1️⃣ Clone the Repository
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 ```bash
 git clone <repository-url>
 cd af-2-SankalaniS
 ```
 
+<<<<<<< HEAD
 2️ Install Dependencies
+=======
+2️⃣ Install Dependencies
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 ```bash
 npm install
 ```
 
+<<<<<<< HEAD
 3️ Start the Development Server
+=======
+3️⃣ Start the Development Server
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 ```bash
 npm run dev
 ```
 
+<<<<<<< HEAD
 4️ Access the Application
+=======
+4️⃣ Access the Application
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 Open your browser and navigate to:  
 👉 `http://localhost:5173`
 
@@ -140,12 +167,19 @@ The application uses the [REST Countries API](https://restcountries.com/v3.1) to
 📊 Technical Report
 
 Why REST Countries API?
+<<<<<<< HEAD
 1 Rich Data Set: Provides comprehensive country information (flags, population, languages, currencies, etc.).
 2 No Authentication Required: Freely accessible without API keys.
 3 Well-Documented: Clear documentation and predictable response structure.
 4 Reliability: Stable with good uptime and response times.
 
 ---
+=======
+1. Rich Data Set: Provides comprehensive country information (flags, population, languages, currencies, etc.).
+2. No Authentication Required: Freely accessible without API keys.
+3. Well-Documented: Clear documentation and predictable response structure.
+4. Reliability: Stable with good uptime and response times.
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 
 Challenges & Solutions
 
@@ -153,14 +187,21 @@ Challenges & Solutions
 - Challenge: Implementing authentication without a backend.
 - Solution: Used `localStorage` to manage user sessions and credentials.
 
+<<<<<<< HEAD
 2️ Testing Components with External Dependencies
 - Challenge: Testing components dependent on API data and browser features.
 - Solution: Used Jest mocks for API services and `localStorage`.
+=======
+2️Time Zone Handling
+- Challenge: Displaying accurate local time for each country.
+- Solution: Leveraged JavaScript's `Intl.DateTimeFormat` API for timezone conversions.
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 
 3️ Efficient Filtering & Searching
 - Challenge: Implementing performant search and filter functionality.
 - Solution: Used React's state management for client-side filtering.
 
+<<<<<<< HEAD
 4️ Interactive Maps Integration
 - Challenge: Displaying country locations on an interactive map.
 - Solution: Used `React-Leaflet` for embedding maps with country markers.
@@ -188,6 +229,15 @@ Challenges & Solutions
 10 Deployment Issues
 - Challenge: Ensuring smooth deployment and compatibility with hosting platforms.
 - Solution: Used Vercel for deployment and configured environment variables for production builds.
+=======
+4️Interactive Maps Integration
+- Challenge: Displaying country locations on an interactive map.
+- Solution: Used `React-Leaflet` for embedding maps with country markers.
+
+5️Testing Components with External Dependencies
+- Challenge: Testing components dependent on API data and browser features.
+- Solution: Used Jest mocks for API services and `localStorage`.
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 
 ---
 
@@ -204,6 +254,10 @@ Challenges & Solutions
 
 📜 License
 
+<<<<<<< HEAD
 This project was created as part of an academic assignment at SLIIT.
+=======
+This project was created as part of an academic assignment at **SLIIT**.
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 
 ---

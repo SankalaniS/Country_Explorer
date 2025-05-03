@@ -10,6 +10,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isRegister, setIsRegister] = useState(false);
+<<<<<<< HEAD
   const [profileImage, setProfileImage] = useState(null); // State for profile image
 
   const handleImageUpload = (e) => {
@@ -22,6 +23,8 @@ function Login() {
       reader.readAsDataURL(file);
     }
   };
+=======
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 
   const handleLogin = () => {
     if (username.trim() && password.trim()) {
@@ -46,11 +49,15 @@ function Login() {
       if (allUsers[username]) {
         setError('Username already exists');
       } else {
+<<<<<<< HEAD
         allUsers[username] = { 
           password, 
           favorites: [], 
           profileImage // Save the uploaded profile image
         };
+=======
+        allUsers[username] = { password, favorites: [] };
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
         localStorage.setItem('users', JSON.stringify(allUsers));
 
         login(username);
@@ -65,7 +72,11 @@ function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-blue-300">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
+<<<<<<< HEAD
           {isRegister ? 'Create an Account' : 'Welcome'}
+=======
+          {isRegister ? 'Create an Account' : 'Welcome Back'}
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
         </h2>
         <input
           type="text"
@@ -81,6 +92,7 @@ function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+<<<<<<< HEAD
         {isRegister && (
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Upload Profile Image:</label>
@@ -108,6 +120,8 @@ function Login() {
             </div>
           </div>
         )}
+=======
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         {isRegister ? (
           <button

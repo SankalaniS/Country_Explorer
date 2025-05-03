@@ -4,8 +4,11 @@ import { getCountryByCode } from '../services/api';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { motion } from 'framer-motion';
 import 'leaflet/dist/leaflet.css';
+<<<<<<< HEAD
 import Header from '../components/Header'; // Import the Header component
 import React from 'react';
+=======
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 
 function CountryDetail() {
   const { code } = useParams();
@@ -64,6 +67,7 @@ function CountryDetail() {
   }
 
   return (
+<<<<<<< HEAD
     <div>
       <Header onToggleFavorites={() => {}} /> {/* Add the Header component */}
       <motion.div
@@ -171,6 +175,104 @@ function CountryDetail() {
         </motion.div>
       </motion.div>
     </div>
+=======
+    <motion.div
+      className="max-w-6xl mx-auto p-6"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Link
+        to="/"
+        className="inline-block mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-transform transform hover:scale-105"
+      >
+        ← Back
+      </Link>
+
+      <motion.div
+        className="bg-white shadow-lg rounded-lg p-6 flex flex-col md:flex-row gap-6"
+        initial={{ scale: 0.95 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        {/* Left Section: Flag and Details */}
+        <motion.div
+          className="flex-1"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          <img
+            src={country.flags.svg}
+            alt={country.name.common}
+            className="w-full rounded-lg shadow-md mb-4"
+          />
+          <div>
+            <h1 className="text-4xl font-bold text-blue-600 mb-4">
+              {country.name.common}
+            </h1>
+            <p className="text-lg text-gray-700">
+              <strong>Official Name:</strong> {country.name.official}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Capital:</strong> {country.capital?.[0]}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Region:</strong> {country.region}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Subregion:</strong> {country.subregion}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Population:</strong> {country.population.toLocaleString()}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Languages:</strong>{' '}
+              {Object.values(country.languages || {}).join(', ')}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Timezones:</strong> {country.timezones.join(', ')}
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Area:</strong> {country.area.toLocaleString()} km²
+            </p>
+            <p className="text-lg text-gray-700">
+              <strong>Currency:</strong>{' '}
+              {Object.values(country.currencies || {})
+                .map((c) => c.name)
+                .join(', ')}
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Right Section: Map */}
+        <motion.div
+          className="flex-1"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <h2 className="text-2xl font-semibold text-blue-600 mb-4">
+            Location on Map
+          </h2>
+          <MapContainer
+            center={country.latlng}
+            zoom={4}
+            style={{ height: '500px', width: '100%' }} // Increased height to 500px
+            className="rounded-lg shadow-md mb-6"
+          >
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            <Marker position={country.latlng}>
+              <Popup>{country.name.common}</Popup>
+            </Marker>
+          </MapContainer>
+        </motion.div>
+      </motion.div>
+    </motion.div>
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
   );
 }
 

@@ -41,7 +41,11 @@ function Header({ onToggleFavorites }) {
       </div>
 
       {/* Center Section: Title */}
+<<<<<<< HEAD
       <h1 className="text-3xl font-bold tracking-wide text-blue-800">🌍 Country Explorer</h1>
+=======
+      <h1 className="text-3xl font-bold tracking-wide text-blue-600">🌍 Country Explorer</h1>
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
 
       {/* Right Section: User Menu */}
       <div className="relative">
@@ -50,6 +54,7 @@ function Header({ onToggleFavorites }) {
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => setShowMenu(!showMenu)}
           >
+<<<<<<< HEAD
             {user.profileImage ? (
               <img
                 src={user.profileImage}
@@ -60,6 +65,10 @@ function Header({ onToggleFavorites }) {
               <FaUserCircle className="w-10 h-10 text-gray-400" />
             )}
             <span className="text-lg font-medium">Hello, {user.username}!</span>
+=======
+            <FaUserCircle className="text-3xl text-blue-600" />
+            <span className="text-lg font-medium">{user.username}</span>
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
           </div>
         ) : null}
 
@@ -68,7 +77,11 @@ function Header({ onToggleFavorites }) {
             <ul className="py-2">
               <li
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+<<<<<<< HEAD
                 onClick={handleProfileClick}
+=======
+                onClick={handleProfileClick} // Navigate to Profile
+>>>>>>> baaabb977c03ce9cc7acc6db4b1a085b929cdd55
               >
                 Profile
               </li>
