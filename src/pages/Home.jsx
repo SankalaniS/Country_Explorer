@@ -17,6 +17,7 @@ function Home() {
   const [topLanguages, setTopLanguages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedPopulation, setSelectedPopulation] = useState('');
 
   const navigate = useNavigate();
 
@@ -59,6 +60,11 @@ function Home() {
     };
     fetchData();
   }, []);
+
+  const handlePopulationChange = (populationRange) => {
+    console.log('Selected Population Range:', populationRange);
+    setSelectedPopulation(populationRange);
+  };
 
   const handleViewDetails = async (code) => {
     try {
@@ -135,10 +141,19 @@ function Home() {
         selectedLanguage
           ? Object.values(country.languages || {}).includes(selectedLanguage)
           : true
-      );
+      )
+      .filter((country) => {
+        if (!selectedPopulation) return true;
+        const population = country.population;
+        if (selectedPopulation === 'small') return population < 1_000_000;
+        if (selectedPopulation === 'medium') return population >= 1_000_000 && population <= 10_000_000;
+        if (selectedPopulation === 'large') return population > 10_000_000 && population <= 100_000_000;
+        if (selectedPopulation === 'veryLarge') return population > 100_000_000;
+        return true;
+      });
 
     setFilteredCountries(results);
-  }, [searchQuery, selectedRegion, selectedLanguage, countries, showFavorites]);
+  }, [searchQuery, selectedRegion, selectedLanguage, selectedPopulation, countries, showFavorites]);
 
   if (loading) {
     return <p className="text-center mt-6">Loading countries...</p>;
@@ -152,10 +167,11 @@ function Home() {
     <div>
       <Header onToggleFavorites={setShowFavorites} />
       <div className="max-w-6xl mx-auto px-4">
-        <SearchBar onSearch={setSearchQuery} />
+        <SearchBar onSearch={handleSearch} />
         <FilterBar
           onRegionChange={handleRegionChange}
           onLanguageChange={setSelectedLanguage}
+          onPopulationChange={handlePopulationChange}
           regions={topRegions}
           languages={topLanguages}
         />
