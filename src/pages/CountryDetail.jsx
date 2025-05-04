@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getCountryByCode } from '../services/api';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { motion } from 'framer-motion';
+import { FaGlobe, FaCity, FaUsers, FaLanguage, FaClock, FaRulerCombined, FaMoneyBillWave, FaBorderAll } from 'react-icons/fa';
 import 'leaflet/dist/leaflet.css';
 import Header from '../components/Header';
 import React from 'react';
@@ -140,55 +141,71 @@ function CountryDetail() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
-              <p className="text-lg font-semibold text-gray-700">Official Name</p>
-              <p className="text-gray-600">{country.name.official}</p>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md flex items-center gap-4">
+              <FaGlobe className="text-blue-600 text-2xl" />
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Official Name</p>
+                <p className="text-gray-600">{country.name.official}</p>
+              </div>
             </div>
-            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
-              <p className="text-lg font-semibold text-gray-700">Capital</p>
-              <p className="text-gray-600">{country.capital?.[0]}</p>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md flex items-center gap-4">
+              <FaCity className="text-blue-600 text-2xl" />
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Capital</p>
+                <p className="text-gray-600">{country.capital?.[0]}</p>
+              </div>
             </div>
-            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
-              <p className="text-lg font-semibold text-gray-700">Region</p>
-              <p className="text-gray-600">{country.region}</p>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md flex items-center gap-4">
+              <FaUsers className="text-blue-600 text-2xl" />
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Population</p>
+                <p className="text-gray-600">{country.population.toLocaleString()}</p>
+              </div>
             </div>
-            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
-              <p className="text-lg font-semibold text-gray-700">Subregion</p>
-              <p className="text-gray-600">{country.subregion}</p>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md flex items-center gap-4">
+              <FaLanguage className="text-blue-600 text-2xl" />
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Languages</p>
+                <p className="text-gray-600">
+                  {Object.values(country.languages || {}).join(', ')}
+                </p>
+              </div>
             </div>
-            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
-              <p className="text-lg font-semibold text-gray-700">Population</p>
-              <p className="text-gray-600">{country.population.toLocaleString()}</p>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md flex items-center gap-4">
+              <FaClock className="text-blue-600 text-2xl" />
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Timezones</p>
+                <p className="text-gray-600">{country.timezones.join(', ')}</p>
+              </div>
             </div>
-            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
-              <p className="text-lg font-semibold text-gray-700">Languages</p>
-              <p className="text-gray-600">
-                {Object.values(country.languages || {}).join(', ')}
-              </p>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md flex items-center gap-4">
+              <FaRulerCombined className="text-blue-600 text-2xl" />
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Area</p>
+                <p className="text-gray-600">{country.area.toLocaleString()} km²</p>
+              </div>
             </div>
-            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
-              <p className="text-lg font-semibold text-gray-700">Timezones</p>
-              <p className="text-gray-600">{country.timezones.join(', ')}</p>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md flex items-center gap-4">
+              <FaMoneyBillWave className="text-blue-600 text-2xl" />
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Currency</p>
+                <p className="text-gray-600">
+                  {Object.values(country.currencies || {})
+                    .map((c) => c.name)
+                    .join(', ')}
+                </p>
+              </div>
             </div>
-            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
-              <p className="text-lg font-semibold text-gray-700">Area</p>
-              <p className="text-gray-600">{country.area.toLocaleString()} km²</p>
-            </div>
-            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
-              <p className="text-lg font-semibold text-gray-700">Currency</p>
-              <p className="text-gray-600">
-                {Object.values(country.currencies || {})
-                  .map((c) => c.name)
-                  .join(', ')}
-              </p>
-            </div>
-            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
-              <p className="text-lg font-semibold text-gray-700">Border Countries</p>
-              <p className="text-gray-600">
-                {borderCountries.length > 0
-                  ? borderCountries.join(', ')
-                  : 'No border countries'}
-              </p>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md flex items-center gap-4">
+              <FaBorderAll className="text-blue-600 text-2xl" />
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Border Countries</p>
+                <p className="text-gray-600">
+                  {borderCountries.length > 0
+                    ? borderCountries.join(', ')
+                    : 'No border countries'}
+                </p>
+              </div>
             </div>
           </motion.div>
         </motion.div>
