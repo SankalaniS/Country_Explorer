@@ -4,13 +4,14 @@ import { getCountryByCode } from '../services/api';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { motion } from 'framer-motion';
 import 'leaflet/dist/leaflet.css';
-import Header from '../components/Header'; // Import the Header component
+import Header from '../components/Header';
 import React from 'react';
 
 function CountryDetail() {
   const { code } = useParams();
   const [country, setCountry] = useState(null);
   const [user, setUser] = useState(null);
+  const [borderCountries, setBorderCountries] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +32,24 @@ function CountryDetail() {
       setUser(allUsers[username]);
     }
   }, []);
+
+  useEffect(() => {
+    const fetchBorderCountries = async () => {
+      if (country?.borders?.length) {
+        try {
+          const borderData = await Promise.all(
+            country.borders.map((borderCode) => getCountryByCode(borderCode))
+          );
+          setBorderCountries(borderData.map((res) => res[0].name.common));
+        } catch (err) {
+          console.error('Error fetching border countries:', err);
+        }
+      }
+    };
+    if (country) {
+      fetchBorderCountries();
+    }
+  }, [country]);
 
   const handleFavoriteToggle = () => {
     const username = localStorage.getItem('user');
@@ -65,7 +84,7 @@ function CountryDetail() {
 
   return (
     <div>
-      <Header onToggleFavorites={() => {}} /> {/* Add the Header component */}
+      <Header onToggleFavorites={() => {}} />
       <motion.div
         className="max-w-6xl mx-auto p-6"
         initial={{ opacity: 0, y: 20 }}
@@ -87,7 +106,7 @@ function CountryDetail() {
         >
           {/* Left Section: Flag and Details */}
           <motion.div
-            className="flex-1"
+            className="flex-1 flex flex-col items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -95,69 +114,100 @@ function CountryDetail() {
             <img
               src={country.flags.svg}
               alt={country.name.common}
-              className="w-full rounded-lg shadow-md mb-4"
+              className="rounded-lg shadow-md mb-4"
             />
-            <div>
-              <h1 className="text-4xl font-bold text-blue-600 mb-4">
-                {country.name.common}
-              </h1>
-              <p className="text-lg text-gray-700">
-                <strong>Official Name:</strong> {country.name.official}
-              </p>
-              <p className="text-lg text-gray-700">
-                <strong>Capital:</strong> {country.capital?.[0]}
-              </p>
-              <p className="text-lg text-gray-700">
-                <strong>Region:</strong> {country.region}
-              </p>
-              <p className="text-lg text-gray-700">
-                <strong>Subregion:</strong> {country.subregion}
-              </p>
-              <p className="text-lg text-gray-700">
-                <strong>Population:</strong> {country.population.toLocaleString()}
-              </p>
-              <p className="text-lg text-gray-700">
-                <strong>Languages:</strong>{' '}
-                {Object.values(country.languages || {}).join(', ')}
-              </p>
-              <p className="text-lg text-gray-700">
-                <strong>Timezones:</strong> {country.timezones.join(', ')}
-              </p>
-              <p className="text-lg text-gray-700">
-                <strong>Area:</strong> {country.area.toLocaleString()} km²
-              </p>
-              <p className="text-lg text-gray-700">
-                <strong>Currency:</strong>{' '}
-                {Object.values(country.currencies || {})
-                  .map((c) => c.name)
-                  .join(', ')}
-              </p>
-              <button
-                onClick={handleFavoriteToggle}
-                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-              >
-                {user?.favorites.includes(country.cca3)
-                  ? 'Remove from Favorites'
-                  : 'Add to Favorites'}
-              </button>
-            </div>
+            <h1 className="text-4xl font-bold text-blue-600 mb-4 text-center">
+              {country.name.common}
+            </h1>
+            <button
+              onClick={handleFavoriteToggle}
+              className={`mt-4 px-6 py-2 rounded-full text-white ${
+                user?.favorites.includes(country.cca3)
+                  ? 'bg-red-500 hover:bg-red-600'
+                  : 'bg-blue-600 hover:bg-blue-700'
+              }`}
+            >
+              {user?.favorites.includes(country.cca3)
+                ? 'Remove from Favorites'
+                : 'Add to Favorites'}
+            </button>
           </motion.div>
 
-          {/* Right Section: Map */}
+          {/* Right Section: Details */}
           <motion.div
-            className="flex-1"
+            className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            <h2 className="text-2xl font-semibold text-blue-600 mb-4">
-              Location on Map
-            </h2>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
+              <p className="text-lg font-semibold text-gray-700">Official Name</p>
+              <p className="text-gray-600">{country.name.official}</p>
+            </div>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
+              <p className="text-lg font-semibold text-gray-700">Capital</p>
+              <p className="text-gray-600">{country.capital?.[0]}</p>
+            </div>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
+              <p className="text-lg font-semibold text-gray-700">Region</p>
+              <p className="text-gray-600">{country.region}</p>
+            </div>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
+              <p className="text-lg font-semibold text-gray-700">Subregion</p>
+              <p className="text-gray-600">{country.subregion}</p>
+            </div>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
+              <p className="text-lg font-semibold text-gray-700">Population</p>
+              <p className="text-gray-600">{country.population.toLocaleString()}</p>
+            </div>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
+              <p className="text-lg font-semibold text-gray-700">Languages</p>
+              <p className="text-gray-600">
+                {Object.values(country.languages || {}).join(', ')}
+              </p>
+            </div>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
+              <p className="text-lg font-semibold text-gray-700">Timezones</p>
+              <p className="text-gray-600">{country.timezones.join(', ')}</p>
+            </div>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
+              <p className="text-lg font-semibold text-gray-700">Area</p>
+              <p className="text-gray-600">{country.area.toLocaleString()} km²</p>
+            </div>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
+              <p className="text-lg font-semibold text-gray-700">Currency</p>
+              <p className="text-gray-600">
+                {Object.values(country.currencies || {})
+                  .map((c) => c.name)
+                  .join(', ')}
+              </p>
+            </div>
+            <div className="p-4 bg-blue-50 rounded-lg shadow-md">
+              <p className="text-lg font-semibold text-gray-700">Border Countries</p>
+              <p className="text-gray-600">
+                {borderCountries.length > 0
+                  ? borderCountries.join(', ')
+                  : 'No border countries'}
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Map Section */}
+        <motion.div
+          className="mt-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <h2 className="text-2xl font-semibold text-blue-600 mb-4">
+            Location on Map
+          </h2>
+          <div className="rounded-lg shadow-md overflow-hidden border border-gray-300">
             <MapContainer
-              center={country.latlng} // Center the map on the country's coordinates
-              zoom={6} // Adjust the zoom level (e.g., 6 for a closer view)
+              center={country.latlng}
+              zoom={6}
               style={{ height: '500px', width: '100%' }}
-              className="rounded-lg shadow-md mb-6"
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -167,7 +217,7 @@ function CountryDetail() {
                 <Popup>{country.name.common}</Popup>
               </Marker>
             </MapContainer>
-          </motion.div>
+          </div>
         </motion.div>
       </motion.div>
     </div>
